@@ -7,9 +7,9 @@ function App() {
       <header className="App-header">
         <p>otto BoxOffice</p>
       </header>
-      <body>
-        <Boxoffice />
-      </body>
+      
+      <Boxoffice />
+      
       <footer className="App-footer">
         <p> copyright </p>
       </footer>
