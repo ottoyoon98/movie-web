@@ -1,28 +1,52 @@
 import {useEffect, useState} from "react";
 import Glide from "@glidejs/glide"
-
 import './boxoffice.scss';
 
 function Boxoffice()
 {
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
-    const key ='3e56c5d518bc82f65d4d1d16806fdd37';
+    const key1 = '3e56c5d518bc82f65d4d1d16806fdd37';
+    const key2 = 'G3O5TIC12LVI911FTE84';
     const today = new Date();
-    const targetDT = today.getFullYear()+(today.getMonth()).toString().padStart(2,0)+(today.getDate().toString().padStart(2,0));
-    const getMovies = async () => {
-        const json = await (
-            await fetch(
-                `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${key}&targetDt=${targetDT}`
-            )
-        ).json();
-        setMovies(json.boxOfficeResult.dailyBoxOfficeList);;
-        setLoading(false);
-    };
-    var carousels = document.querySelectorAll('.glide');
+    let targetDT = today.getFullYear()+(today.getMonth()).toString().padStart(2,0)+(today.getDate().toString().padStart(2,0));
+     
+    let carousels = document.querySelectorAll('.glide');
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
     useEffect(() => {
-        getMovies();
-    }, []);
+        const getMovies = async (movie) => {
+            const json = await (
+                await fetch(
+                    `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${movie.movieNm}&releaseDts=${movie.openDt.replaceAll("-","")}&ServiceKey=${key2}`
+                )
+            ).json();
+            return {
+                "title": movie.movieNm,
+                "rank": movie.rank,
+                "openDt": movie.openDt,
+                "audiCnt": movie.audiCnt,
+                "audiAcc": movie.audiCnt,
+                "posters":json.Data[0].Result[0].posters,
+                "kmdbURL":json.Data[0].Result[0].kmdbUrl};
+        }
+        const getBoxOffice = async() => {
+            const response = await(await (
+                await fetch(
+                    `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${key1}&targetDt=${targetDT}`
+                )
+            ).json()).boxOfficeResult.dailyBoxOfficeList;
+            const boxOffice = await(response.map((movie) => getMovies(movie)));
+            //Promise.allSettled(boxOffice);
+            await Promise.all(boxOffice).then((result) => {
+                console.log(result);
+                setMovies(result);
+                setLoading(false);
+            });
+        }
+        getBoxOffice();
+    }, [targetDT]);
     useEffect(() => {
         console.log(carousels.length);
         for(var i = 0 ; i < carousels.length; i++){
@@ -46,10 +70,13 @@ function Boxoffice()
                                     {movies.map((movie) => (
                                         <li className="frames__item glide__slide" key={movie.rank}>
                                             <div className="boxoffice">
-                                                <h2> {movie.rank} </h2>
-                                                <p> {movie.movieNm} ({movie.openDt.substr(0, 4)}) </p>
-                                                <p> 오늘 관객수: {movie.audiCnt} </p>
-                                                <p> 누적 관객수: {movie.audiAcc} </p>
+                                                {console.log(movie)}
+                                                <a href={movie.kmdbURL}>
+                                                    {movie.posters.split("|")[0] === null ? (<img src="../public/emptyposters-01.jpg" alt="poster"/>) : ( <img src={movie.posters.split("|")[0]} alt="poster" width="240px"/>)}
+                                                </a>
+                                                <h3> {movie.rank}. {movie.title}</h3>
+                                                 <p>  ({movie.openDt/*.substr(0, 4)*/}) </p>
+                                                
                                             </div>
                                         </li>    
                                     ))}
@@ -64,6 +91,7 @@ function Boxoffice()
                 }
             </div>
             <h1> week boxofiice </h1>
+            <img src="http://file.koreafilm.or.kr/thm/02/00/01/46/tn_DPK004440.JPG" alt="7광구"></img>
         </div>
     )
 }
