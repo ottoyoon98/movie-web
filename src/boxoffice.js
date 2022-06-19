@@ -54,6 +54,18 @@ function Boxoffice()
                 type: 'carousel',
                 startAt: 0,
                 perView: 6,
+                breakpoints: {
+                  1500: {
+                    perView: 5
+                  },
+                  1200: {
+                    perView: 3
+                  },
+                  730: {
+                    perView: 2
+                  }
+                }
+              
             });  
             glide.mount();
         }
@@ -83,15 +95,14 @@ function Boxoffice()
                                 </ul>
                             </div>
                             <div data-glide-el="controls">
-                                <button data-glide-dir="<">&lt;</button>
-                                <button data-glide-dir=">">&gt;</button>
+                                <button className="glide_btn" data-glide-dir="<">&lt;</button>
+                                <button className="glide_btn" data-glide-dir=">">&gt;</button>
                             </div>
                         </div>
                     )
                 }
             </div>
-            <h1> week boxofiice </h1>
-            <img src="http://file.koreafilm.or.kr/thm/02/00/01/46/tn_DPK004440.JPG" alt="7광구"></img>
+
         </div>
     )
 }

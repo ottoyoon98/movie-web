@@ -11,7 +11,7 @@ function App() {
       <Boxoffice />
       
       <footer className="App-footer">
-        <p> copyright </p>
+        <p> © otto. All rights reserved.</p>
       </footer>
     </div>
   );
