@@ -53,7 +53,7 @@ function Boxoffice()
             var glide = new Glide(carousels[i], {
                 type: 'carousel',
                 startAt: 0,
-                perView: 5,
+                perView: 6,
             });  
             glide.mount();
         }
@@ -72,7 +72,7 @@ function Boxoffice()
                                             <div className="boxoffice">
                                                 {console.log(movie)}
                                                 <a href={movie.kmdbURL}>
-                                                    {movie.posters.split("|")[0] === null ? (<img src="../public/emptyposters-01.jpg" alt="poster"/>) : ( <img src={movie.posters.split("|")[0]} alt="poster" width="240px"/>)}
+                                                    {movie.posters === "" ? (<img src="https://www.booooooom.com/wp-content/uploads/2015/04/emptyfilmposters-01.jpg" alt="poster" width="240px"/>) : ( <img src={movie.posters.split("|")[0]} alt="poster" width="240px"/>)}
                                                 </a>
                                                 <h3> {movie.rank}. {movie.title}</h3>
                                                  <p>  ({movie.openDt/*.substr(0, 4)*/}) </p>
