@@ -59,8 +59,8 @@ function Boxoffice()
         }
     }, [carousels]);
     return (
-        <div>
-            <h1> today boxoffice</h1>
+        <div className="main">
+            <h1 className="head"> Today BOX OFFICE</h1>
             <div className="glide">
                 {loading ? ( 
                     <p>loading...</p>) : (
