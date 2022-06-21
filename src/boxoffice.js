@@ -9,7 +9,7 @@ function Boxoffice()
     const key1 = '3e56c5d518bc82f65d4d1d16806fdd37';
     const key2 = 'G3O5TIC12LVI911FTE84';
     const today = new Date();
-    let targetDT = today.getFullYear()+(today.getMonth()).toString().padStart(2,0)+(today.getDate().toString().padStart(2,0));
+    let targetDT = today.getFullYear()+(today.getMonth()+1).toString().padStart(2,0)+(today.getDate()-1).toString().padStart(2,0);
      
     let carousels = document.querySelectorAll('.glide');
 
@@ -37,8 +37,8 @@ function Boxoffice()
                     `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${key1}&targetDt=${targetDT}`
                 )
             ).json()).boxOfficeResult.dailyBoxOfficeList;
+            console.log(targetDT);
             const boxOffice = await(response.map((movie) => getMovies(movie)));
-            //Promise.allSettled(boxOffice);
             await Promise.all(boxOffice).then((result) => {
                 console.log(result);
                 setMovies(result);
