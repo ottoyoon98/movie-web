@@ -5,13 +5,16 @@
     margin-bottom: 200px;
 }
 .head{
-    width: 600px;
+    width: 500px;
     margin: 80px auto;
     padding: 20px;
     font-size: 40px;
     border-radius: 10px;
     border-width: 6px;
     border-style: double;
+}
+.glide{
+    padding: 50px;
 }
 .boxoffices{
     align-items: center; 
@@ -20,12 +23,12 @@
 }
 .boxoffice{
     
-    width: 260px;
+    width: 180px;
     align-items: center; 
     text-align: center;
-
-
-
+}
+.moviePoster{
+    width: 160px;
 }
 .glide_btn{
     margin: 30px;
@@ -48,4 +51,9 @@
     }
 
 
+}
+
+h1 > p{
+    font-size: 16px;
+    font-weight: lighter;
 }

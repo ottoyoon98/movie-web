@@ -1,5 +1,6 @@
 import './App.css';
 import Boxoffice from './boxoffice';
+import Carousel from './Carousel';
 
 function App() {
   return (
@@ -8,8 +9,11 @@ function App() {
         <h2>otto Movie Web</h2>
       </header>
       
-      <Boxoffice />
       
+      <Boxoffice idx="1" apiType='Daily'/>
+      <Boxoffice idx="2" apiType='Weekly'/>
+      <Carousel />
+
       <footer className="App-footer">
         <p> © otto. All rights reserved.</p>
       </footer>
