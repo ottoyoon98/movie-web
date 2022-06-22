@@ -41,32 +41,38 @@ function Boxoffice({idx, apiType = "Daily"})
             setRange(response.showRange);
             const boxOffice = apiType === "Daily" ? await(response.dailyBoxOfficeList.map((movie) => getMovies(movie))) : await(response.weeklyBoxOfficeList.map((movie) => getMovies(movie)));
             await Promise.all(boxOffice).then((result) => {
-                console.log(result);
                 setMovies(result);
                 setLoading(false);
             }).catch();
         }
         getBoxOffice();
     }, [targetDT1, targetDT2, apiType]);
-    console.log(`#g${idx}`)
     let carousels = document.querySelectorAll(`#g${idx}`);
     useEffect(() => {
-        console.log(carousels);
         for (var i = 0 ; i < carousels.length ; i++){
             const glide = new Glide(carousels[i], {
                 type: 'carousel',
-                gap: 20,
+                gap: 25,
                 startAt: 0,
-                perView: 7,
+                perView: 8,
                 breakpoints: {
-                    1500: {
-                    perView: 6
+                    1600:{
+                        perView: 7
                     },
-                    1200: {
-                    perView: 4
+                    1400: {
+                        perView: 6
                     },
-                    730: {
-                    perView: 3
+                    1250: {
+                        perView: 5
+                    },
+                    1000: {
+                        perView: 4
+                    },
+                    860: {
+                        perView: 3
+                    },
+                    640: {
+                        perView: 2
                     }
                 }
                 
@@ -76,14 +82,13 @@ function Boxoffice({idx, apiType = "Daily"})
             } catch{
                 console.log("hi");
             }
-            console.log(carousels[i].id);
         }
     }, [carousels]);
     return (
         <div className="main">
             <h1 className="head">
                  {apiType} BOX OFFICE
-                 <p>({range})</p>
+                 <p>({apiType==="Daily"? (range.substr(0,8)) : (range)})</p>
             </h1>
             
             <div className="glide" id={"g"+idx}>
@@ -94,13 +99,12 @@ function Boxoffice({idx, apiType = "Daily"})
                                 <ul className = "frames__list glide__slides">
                                     {movies.map((movie) => (
                                         <li className="frames__item glide__slide" key={movie.rnum}>
-                                            {console.log(movie)}
                                             <div className="boxoffice" >
                                                 <a href={movie.kmdbURL}>
                                                     {movie.posters === "" ? (<img className="moviePoster" src="https://www.booooooom.com/wp-content/uploads/2015/04/emptyfilmposters-01.jpg" alt="poster" />) : ( <img className="moviePoster" src={movie.posters.split("|")[0]} alt="poster"/>)}
                                                 </a>
                                                 <h3> {movie.rank}. {movie.title}</h3>
-                                                 <p>  ({movie.openDt/*.substr(0, 4)*/}) </p>
+                                                <p>  ({movie.openDt/*.substr(0, 4)*/}) </p>
                                                 
                                             </div>
                                         </li>    
