@@ -88,12 +88,13 @@ function Boxoffice({idx, apiType = "Daily"})
         <div className="main">
             <h1 className="head">
                  {apiType} BOX OFFICE
-                 <p>({apiType==="Daily"? (range.substr(0,8)) : (range)})</p>
+                 {loading ? <></>: <p>({apiType==="Daily"? (range.substr(0,8)) : (range)})</p>}
+                 
             </h1>
             
             <div className="glide" id={"g"+idx}>
                 {loading ? ( 
-                    <p>loading...</p>) : (
+                    <div className="loading"> <h2>loading...</h2></div>) : (
                         <div >
                             <div className="frames glide__track" data-glide-el="track">
                                 <ul className = "frames__list glide__slides">
